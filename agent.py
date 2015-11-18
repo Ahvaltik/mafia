@@ -21,7 +21,7 @@ class Civilian:
 
 class Gangster(Civilian):
 
-    def night_step(self, system):
+    def night_step(self):
         pass
 
     def night_vote(self):
