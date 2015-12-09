@@ -12,7 +12,7 @@ class System:
         self.resources = {}
         self.polls = []
         self.night_polls = []
-		self.deadmen = []
+        self.deadmen = []
         for i in range(n_civilians):
             self.agents.append(agent.Civilian(self))
         for i in range(n_gangsters):
@@ -48,9 +48,10 @@ class System:
                 max_votes = results[vote[civilian]]
                 best_candidate = vote[civilian]
         self.agents.remove(best_candidate)
-        best_candidate.execute()
         if not best_candidate.civilian():
             self.gangsters.remove(best_candidate)
+        best_candidate.execute()
+        self.deadmen.append(best_candidate)
         self.polls.append(vote)
 
     def create_night_poll(self):
@@ -66,6 +67,7 @@ class System:
                 best_candidate = vote[gangster]
         self.agents.remove(best_candidate)
         best_candidate.execute()
+        self.deadmen.append(best_candidate)
         self.night_polls.append(vote)
 
     def step(self):
@@ -73,7 +75,6 @@ class System:
         self.day_step()
 
     def day_step(self):
-        #TODO make full step function
         for civilian in self.agents:
             civilian.step()
 

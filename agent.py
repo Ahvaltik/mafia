@@ -25,6 +25,7 @@ class Civilian:
     def civilian(self):
         return True
 
+
 class Gangster(Civilian):
     def night_step(self):
         pass
