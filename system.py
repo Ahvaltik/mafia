@@ -36,51 +36,60 @@ class System:
         self.resources[resource_name] -= number
         return number
 
-    def create_poll(self):
+    def __create_poll(self):
         vote = {}
         results = {}
         max_votes = 0
         best_candidate = None
         for civilian in self.agents:
             vote[civilian] = civilian.vote()
+            if vote[civilian] not in results.keys():
+                results[vote[civilian]] = 0
             results[vote[civilian]] += 1
             if results[vote[civilian]] > max_votes:
                 max_votes = results[vote[civilian]]
                 best_candidate = vote[civilian]
-        self.agents.remove(best_candidate)
-        if not best_candidate.civilian():
-            self.gangsters.remove(best_candidate)
-        best_candidate.execute()
-        self.deadmen.append(best_candidate)
-        self.polls.append(vote)
+        if best_candidate:
+            self.agents.remove(best_candidate)
+            if not best_candidate.civilian:
+                self.gangsters.remove(best_candidate)
+            best_candidate.execute()
+            self.deadmen.append(best_candidate)
+            self.polls.append(vote)
 
-    def create_night_poll(self):
+    def __create_night_poll(self):
         vote = {}
         results = {}
         max_votes = 0
         best_candidate = None
         for gangster in self.gangsters:
             vote[gangster] = gangster.vote()
+            if vote[gangster] not in results.keys():
+                results[vote[gangster]] = 0
             results[vote[gangster]] += 1
             if results[vote[gangster]] > max_votes:
                 max_votes = results[vote[gangster]]
                 best_candidate = vote[gangster]
-        self.agents.remove(best_candidate)
-        best_candidate.execute()
-        self.deadmen.append(best_candidate)
-        self.night_polls.append(vote)
+        if best_candidate:
+            self.agents.remove(best_candidate)
+            best_candidate.execute()
+            self.deadmen.append(best_candidate)
+            self.night_polls.append(vote)
 
     def step(self):
-        self.night_step()
-        self.day_step()
+        print str(len(self.gangsters)) + "/" + str(len(self.agents))
+        self.__night_step()
+        self.__create_night_poll()
+        self.__day_step()
+        self.__create_poll()
 
-    def day_step(self):
+    def __day_step(self):
         for civilian in self.agents:
             civilian.step()
 
-    def night_step(self):
+    def __night_step(self):
         for gangster in self.gangsters:
             gangster.night_step()
 
     def finished(self):
-        pass
+        return 2 * len(self.gangsters) > len(self.agents) or len(self.gangsters) == 0

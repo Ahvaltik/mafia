@@ -1,10 +1,12 @@
 __author__ = 'Pawel'
+import random
 
 
 class Civilian:
 
     def __init__(self, system):
         self.__active = True
+        self.system = system
 
     def step(self):
         pass
@@ -19,7 +21,10 @@ class Civilian:
         pass
 
     def vote(self):
-        pass
+        if len(self.system.agents) > 0:
+            return random.choice(self.system.agents)
+        else:
+            return None
 
     @property
     def civilian(self):
@@ -31,7 +36,10 @@ class Gangster(Civilian):
         pass
 
     def night_vote(self):
-        pass
+        if len(self.system.agents - self.system.gangsters) > 0:
+            return random.choice(self.system.agents - self.system.gangsters)
+        else:
+            return None
 
     @property
     def civilian(self):
