@@ -1,4 +1,5 @@
 import agent
+import random
 
 __author__ = 'Pawel'
 
@@ -11,11 +12,13 @@ class System:
         self.resources = {}
         self.polls = []
         self.night_polls = []
+		self.deadmen = []
         for i in range(n_civilians):
             self.agents.append(agent.Civilian(self))
         for i in range(n_gangsters):
             self.gangsters.append(agent.Gangster(self))
         self.agents.extend(self.gangsters)
+        self.agents = random.sample(self.agents, len(self.agents))
 
     def add_resource(self, resource_name, number):
         if resource_name in self.resources.keys():
@@ -66,6 +69,10 @@ class System:
         self.night_polls.append(vote)
 
     def step(self):
+        self.night_step()
+        self.day_step()
+
+    def day_step(self):
         #TODO make full step function
         for civilian in self.agents:
             civilian.step()

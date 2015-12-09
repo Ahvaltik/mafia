@@ -2,6 +2,7 @@ __author__ = 'Pawel'
 
 
 class Civilian:
+
     def __init__(self, system):
         self.__active = True
 
@@ -24,9 +25,8 @@ class Civilian:
     def civilian(self):
         return True
 
-
 class Gangster(Civilian):
-    def night_step(self, system):
+    def night_step(self):
         pass
 
     def night_vote(self):
