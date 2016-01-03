@@ -4,6 +4,12 @@ import random
 __author__ = 'Pawel'
 
 
+class Transaction:
+    def __init__(self, civilian, resource, amount):
+        self.civilian = civilian
+        self.resource = resource
+        self.amount = amount
+
 class System:
 
     def __init__(self, n_civilians=100, n_gangsters=10):
@@ -13,6 +19,8 @@ class System:
         self.polls = []
         self.night_polls = []
         self.deadmen = []
+        self.transactions = []
+        self.current_transaction = []
         for i in range(n_civilians):
             self.agents.append(agent.Civilian(self))
         for i in range(n_gangsters):
@@ -20,20 +28,24 @@ class System:
         self.agents.extend(self.gangsters)
         self.agents = random.sample(self.agents, len(self.agents))
 
-    def add_resource(self, resource_name, number):
+    def add_resource(self, civilian, resource_name, number):
         if resource_name in self.resources.keys():
             self.resources[resource_name] += number
         else:
             self.resources[resource_name] = number
+        self.current_transaction.append(Transaction(civilian, resource_name, number))
 
-    def substract_resource(self, resource_name, number):
+    def substract_resource(self, civilian, resource_name, number):
         if resource_name not in self.resources.keys():
+            self.current_transaction.append(Transaction(civilian, resource_name, 0))
             return 0
         if self.resources[resource_name] < number:
             result = number - self.resources[resource_name]
             self.resources[resource_name] = 0
+            self.current_transaction.append(Transaction(civilian, resource_name, -result))
             return result
         self.resources[resource_name] -= number
+        self.current_transaction.append(Transaction(civilian, resource_name, -number))
         return number
 
     def __create_poll(self):
@@ -78,10 +90,12 @@ class System:
 
     def step(self):
         print str(len(self.gangsters)) + "/" + str(len(self.agents))
+        self.current_transaction = []
         self.__night_step()
         self.__create_night_poll()
         self.__day_step()
         self.__create_poll()
+        self.transactions.append(self.current_transaction)
 
     def __day_step(self):
         for civilian in self.agents:

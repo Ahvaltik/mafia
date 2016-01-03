@@ -7,8 +7,10 @@ class Civilian:
     def __init__(self, system):
         self.__active = True
         self.system = system
+        # TODO declaration of necessary agent resources and knowledge
 
     def step(self):
+        # TODO producing and consuming resources
         pass
 
     def execute(self):
@@ -18,9 +20,11 @@ class Civilian:
         return self.__active
 
     def acknowledge(self, effects):
+        # TODO transforming actions of other agents into rules
         pass
 
     def vote(self):
+        # TODO chosing agent according to NSA
         if len(self.system.agents) > 0:
             return random.choice(self.system.agents)
         else:
