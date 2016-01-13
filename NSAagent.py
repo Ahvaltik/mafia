@@ -3,8 +3,8 @@ import random
 from NSAModule import NSAModule
 
 class NSACivilian(agent.Civilian):
-	def __init__(self, system, nsa_elements = {}):
-		agent.Civilian.__init__(self, system)
+	def __init__(self, system, name, nsa_elements = {}):
+		agent.Civilian.__init__(self, system, name)
 		self.nsa = NSAModule.NSAModule(nsa_elements)
 		self.facts = {}
 		
