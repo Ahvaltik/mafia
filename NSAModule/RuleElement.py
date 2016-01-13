@@ -47,7 +47,7 @@ class RuleElement:
 				try:
 					amountOfArgs = elements["predicates_data"][predicateName]["amount_of_args"]
 				except:
-					amountOfArgs = 1
+					amountOfArgs = 2
 					
 				amountOfVariableArgs = 0
 				amountOfNewlyCreatedVariables = 0

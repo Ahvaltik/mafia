@@ -9,11 +9,31 @@ class NSAModule:
 		for i in range(no):
 			self.rules.append(Rule.Rule(self.elements))
 		
-	def removeInconsistentRules(self):
-		pass #TODO
+	def removeInconsistentRules(self, candidateName, candidatesNames, facts):
+		res = {}
+		newRules = []
+		for rule in self.rules:
+			res = rule.proceed(candidatesNames, facts)
+			if res[candidateName] != False:
+				for key in res.keys():
+					if res[key] == False:
+						newRules.append(rule)
+						break
+			
+		self.rules = newRules
 		
 	def getRules(self):
 		return self.rules
 		
 	def proceed(self, candidatesNames, facts):
-		pass #TODO
+		res = {}
+		for candidateName in candidatesNames:
+			res[candidateName] = 0
+			
+		for rule in self.rules:
+			result = rule.proceed(candidatesNames, facts)
+			for key in result.keys():
+				if result[key] != False:
+					res[key] = res[key] + 1
+					
+		return res

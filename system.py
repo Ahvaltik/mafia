@@ -23,30 +23,30 @@ class System:
 		self.transactions = []
 		self.current_transaction = []
 		
-		list_of_names = []
+		self.list_of_names = []
 		list_of_basic_names = ['marco', 'vito', 'ezio', 'flavio', 'vincento']
 		for i in range(n_civilians + n_gangsters):
-			list_of_names.append(random.choice(list_of_basic_names) + '_' + str(i))
+			self.list_of_names.append(random.choice(list_of_basic_names) + '_' + str(i))
 		
 		elements ={
 			"possible_predicate_names":
 				["is", "killed", "nightKilled", "voted"], 
 			"possible_predicates_args":
-				list_of_names, 
+				self.list_of_names, 
 			"predicates_data":{
-				#"killed":{
-				#	"amount_of_args": 1
-				#},
-				#"is":{
-			#		"amount_of_args": 1
-			#	}
+				"killed":{
+					"amount_of_args": 1
+				},
+				"is":{
+					"amount_of_args": 1
+				}
 			}
 		}
 		
 		for i in range(n_civilians):
-			self.agents.append(NSAagent.NSACivilian(self, list_of_names[i], elements))
+			self.agents.append(NSAagent.NSACivilian(self, self.list_of_names[i], elements))
 		for i in range(n_gangsters):
-			self.gangsters.append(agent.Gangster(self, list_of_names.pop()))
+			self.gangsters.append(agent.Gangster(self, self.list_of_names[i]))
 		self.agents.extend(self.gangsters)
 		self.agents = random.sample(self.agents, len(self.agents))
 

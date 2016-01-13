@@ -11,15 +11,15 @@ class NSACivilian(agent.Civilian):
 		
 	def step(self):
 		self.nsa.generateRandomRules(100)
-		self.nsa.removeInconsistentRules()
+		self.nsa.removeInconsistentRules(self.name, self.system.list_of_names, self.facts)
 		agent.Civilian.step(self)
 		
 	def acknowledge(self, effects):
 		self.facts.extend(effects)
-		pass
 		
 	def vote(self):
-		# TODO chosing agent according to NSA
+		res = self.nsa.proceed(self.system.list_of_names, self.facts)
+		# znajdz key o najmniejszym value, key bedzie imieniem wytypowanego agenta
 		if len(self.system.agents) > 0:
 			return random.choice(self.system.agents)
 		else:
