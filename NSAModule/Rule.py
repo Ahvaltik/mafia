@@ -43,11 +43,11 @@ class Rule:
 		return not self.positive
 	
 	def proceed(self, candidatesNames, facts):
-	'''
-	Will return dict where keys will be candidates names, and values will be one of following:
-	- False
-	- dict of variables set for which this rule is true for this facts (it means that it is true)
-	'''
+		'''
+		Will return dict where keys will be candidates names, and values will be one of following:
+		- False
+		- dict of variables set for which this rule is true for this facts (it means that it is true)
+		'''
 		candidateRes = {}
 	
 		for candidateName in candidatesNames:
