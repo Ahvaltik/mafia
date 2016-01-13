@@ -53,9 +53,14 @@ class RuleElement:
 				amountOfNewlyCreatedVariables = 0
 				
 				if createPattern:
+					#if amountOfArgs == 1:
+					#	if random.randint(0, 1) == 0:
+					#		amountOfVariableArgs = 1
+					#		if random.randint(0, 1) == 0:
+					#			amountOfNewlyCreatedVariables = 1
 					if amountOfArgs < 3:
 						amountOfVariableArgs = random.sample([0, 1], 1)[0]
-						amountOfNewlyCreatedVariables = random.sample([0, amountOfVariableArgs], 1)[0]
+						amountOfNewlyCreatedVariables = random.choice([0, amountOfVariableArgs])
 					else:
 						amountOfVariableArgs = int(amountOfArgs * random.gauss(0.3, 0.2))
 						amountOfNewlyCreatedVariables = int(amountOfVariableArgs * random.gauss(0.3, 0.2))

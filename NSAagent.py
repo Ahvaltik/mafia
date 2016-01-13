@@ -1,12 +1,13 @@
 import agent
 import random
 from NSAModule import NSAModule
+from NSAModule import Predicate
 
 class NSACivilian(agent.Civilian):
 	def __init__(self, system, name, nsa_elements = {}):
 		agent.Civilian.__init__(self, system, name)
 		self.nsa = NSAModule.NSAModule(nsa_elements)
-		self.facts = {}
+		self.facts = {Predicate.Predicate("is", [name])}
 		
 	def step(self):
 		self.nsa.generateRandomRules(100)

@@ -26,7 +26,7 @@ class System:
 		list_of_names = []
 		list_of_basic_names = ['marco', 'vito', 'ezio', 'flavio', 'vincento']
 		for i in range(n_civilians + n_gangsters):
-			list_of_names.append(random.sample(list_of_basic_names, 1)[0] + '_' + str(i))
+			list_of_names.append(random.choice(list_of_basic_names) + '_' + str(i))
 		
 		elements ={
 			"possible_predicate_names":
@@ -34,17 +34,17 @@ class System:
 			"possible_predicates_args":
 				list_of_names, 
 			"predicates_data":{
-				"killed":{
-					"amount_of_args": 1
-				},
-				"is":{
-					"amount_of_args": 1
-				}
+				#"killed":{
+				#	"amount_of_args": 1
+				#},
+				#"is":{
+			#		"amount_of_args": 1
+			#	}
 			}
 		}
 		
 		for i in range(n_civilians):
-			self.agents.append(NSAagent.NSACivilian(self, list_of_names.pop(), elements))
+			self.agents.append(NSAagent.NSACivilian(self, list_of_names[i], elements))
 		for i in range(n_gangsters):
 			self.gangsters.append(agent.Gangster(self, list_of_names.pop()))
 		self.agents.extend(self.gangsters)
