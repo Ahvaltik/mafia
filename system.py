@@ -1,6 +1,8 @@
 import NSAagent
 import agent
 import random
+from NSAModule import Exists
+from NSAModule import Before
 
 __author__ = 'Pawel'
 
@@ -40,7 +42,9 @@ class System:
 				"is":{
 					"amount_of_args": 1
 				}
-			}
+			},
+			"rule_elements_factories":
+				[Exists.Exists(), Before.Before()]
 		}
 		
 		for i in range(n_civilians):

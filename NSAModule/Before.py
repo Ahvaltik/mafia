@@ -8,6 +8,31 @@ class Before(RuleElement.RuleElement):
 	def proceed(self, variablesBase, facts):
 		results = []
 	
+		for i in range(len(facts)-1):
+			res0 = PredicateMatcher.PredicateMatcher.match(fact[i], self.predicates[0], variablesBase)
+			
+			if res0 == True:
+				for j in range(i+1, len(facts)):
+					res1 = PredicateMatcher.PredicateMatcher.match(fact[j], self.predicates[1], variablesBase)
+					if res1 == True:
+						return True
+					elif isinstance(res1, dict):
+						result.append(res1)
+				
+			if isinstance(res0, dict):
+				for j in range(i+1, len(facts)):
+					res1 = PredicateMatcher.PredicateMatcher.match(fact[j], self.predicates[1], variablesBase)
+					if res1 == True:
+						result.append(res0)
+					elif isinstance(res1, dict):
+						res0.extend(res1)
+						result.append(res0)
+				
+		if len(results) > 0:
+			return results
+		else:
+			return False
+		
 		#for fact in facts:
 		#	res0 = PredicateMatcher.PredicateMatcher.match(fact, self.predicates[0], variablesBase)
 			
@@ -18,6 +43,6 @@ class Before(RuleElement.RuleElement):
 		#		results.append(res)
 				
 		#if len(results) > 0:
-			return results
+		#	return results
 		#else:
 		#	return False
