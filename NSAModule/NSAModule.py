@@ -13,10 +13,16 @@ class NSAModule:
 		res = {}
 		newRules = []
 		for rule in self.rules:
+			notTrueForAll = False
+			trueForSome = False
 			res = rule.proceed(candidatesNames, facts)
 			if res[candidateName] != False:
 				for key in res.keys():
 					if res[key] == False:
+						notTrueForAll = True
+					if res[key] == True and key != candidateName:
+						trueForSome = True
+					if notTrueForAll and trueForSome:
 						newRules.append(rule)
 						break
 			

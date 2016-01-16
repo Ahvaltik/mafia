@@ -12,6 +12,10 @@ class NSACivilian(agent.Civilian):
 	def step(self):
 		self.nsa.generateRandomRules(100)
 		self.nsa.removeInconsistentRules(self.name, self.system.list_of_names, self.facts)
+		if self.name.startswith('vito'):
+			rules = self.nsa.getRules()
+			for rule in rules:
+				print str(rule)
 		agent.Civilian.step(self)
 		
 	def acknowledge(self, effects):
@@ -19,9 +23,17 @@ class NSACivilian(agent.Civilian):
 		
 	def vote(self):
 		res = self.nsa.proceed(self.system.list_of_names, self.facts)
-		# znajdz key o najmniejszym value, key bedzie imieniem wytypowanego agenta
-		if len(self.system.agents) > 0:
-			return random.choice(self.system.agents)
-		else:
-			return None
-	
+		minVal = -1
+		minName = ""
+		for key in res.keys():
+			val = res[key]
+			if minVal == -1:
+				minVal = val
+				minName = key
+			elif minVal > val:
+				minVal = val
+				minName = key
+
+		for agent in self.system.agents:
+			if agent.name == minName:
+				return agent
