@@ -3,6 +3,7 @@ import agent
 import random
 from NSAModule import Exists
 from NSAModule import Before
+from NSAModule import Predicate
 
 __author__ = 'Pawel'
 
@@ -123,11 +124,11 @@ class System:
         self.__create_poll()
         self.transactions.append(self.current_transaction)
         predicates = []
-        predicates.append([self.deadmen[-2].name], 'nightKilled')
+        predicates.append(Predicate.Predicate('nightKilled', [self.deadmen[-2].name]))
         for elector in self.polls[-1].keys():
             chosen = self.polls[-1][elector]
-            predicates.append([elector.name, 'voted', chosen.name])
-        predicates.append([self.deadmen[-1].name], 'killed')
+            predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
+        predicates.append(Predicate.Predicate('killed', [self.deadmen[-1].name]))
         for civilian in self.agents:
             civilian.acknowledge(predicates)
 
