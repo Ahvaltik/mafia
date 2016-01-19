@@ -35,7 +35,7 @@ class RuleElement:
 			for i in range(amountOfPredicates):
 				predicatesArgs = []
 			
-				if createPattern and random.random() < 0.5:
+				if createPattern and random.random() < 0.1:
 					if predicateNameVariablesBase and random.random() < 0.6:
 						predicateName = "P" + str(random.randrange(0, len(predicateNameVariablesBase) + 1))
 					else:

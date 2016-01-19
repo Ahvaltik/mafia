@@ -18,7 +18,7 @@ class Transaction:
 
 
 class System:
-	def __init__(self, n_civilians=50, n_gangsters=5):
+	def __init__(self, n_civilians=10, n_gangsters=2):
 		self.agents = []
 		self.gangsters = []
 		self.resources = {}

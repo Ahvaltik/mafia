@@ -4,13 +4,14 @@ from NSAModule import NSAModule
 from NSAModule import Predicate
 
 class NSACivilian(agent.Civilian):
-	def __init__(self, system, name, nsa_elements = {}):
+	def __init__(self, system, name, nsa_elements = {}, capacityOfMemory = 30):
 		agent.Civilian.__init__(self, system, name)
 		self.nsa = NSAModule.NSAModule(nsa_elements)
 		self.facts = [Predicate.Predicate("is", [name])]
+		self.capacityOfMemory = capacityOfMemory
 		
 	def step(self):
-		self.nsa.generateRandomRules(20)
+		self.nsa.generateRandomRules(1000)
 		
 		#for rule in self.nsa.getRules():
 		#	print str(rule)
@@ -23,6 +24,13 @@ class NSACivilian(agent.Civilian):
 		
 	def acknowledge(self, effects):
 		self.facts.extend(effects)
+		
+		if len(self.facts) > self.capacityOfMemory:
+			tmp = [Predicate.Predicate("is", [self.name])]
+
+			for i in range (len(self.facts) - self.capacityOfMemory, len(self.facts)):
+				tmp.append(self.facts[i])
+			self.facts = tmp
 		
 	def vote(self):
 		res = self.nsa.proceed(self.system.list_of_names, self.facts)
