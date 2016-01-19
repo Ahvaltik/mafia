@@ -98,6 +98,8 @@ class System:
             best_candidate.execute()
             self.deadmen.append(best_candidate)
             self.polls.append(vote)
+        self.hanged = best_candidate
+        self.last_poll = vote
 
     def __create_night_poll(self):
         vote = {}
@@ -117,6 +119,7 @@ class System:
             best_candidate.execute()
             self.deadmen.append(best_candidate)
             self.night_polls.append(vote)
+        self.murdered = best_candidate
 
     def step(self):
         print str(len(self.gangsters)) + "/" + str(len(self.agents))
@@ -125,16 +128,18 @@ class System:
         predicates.append(Predicate.Predicate('day', [len(self.polls)]))
         self.__night_step()
         self.__create_night_poll()
-        predicates.append(Predicate.Predicate('nightKilled', [self.deadmen[-1].name]))
+        if not self.murdered is None:
+            predicates.append(Predicate.Predicate('nightKilled', [self.murdered.name]))
         self.__day_step()
         self.__create_poll()
         self.transactions.append(self.current_transaction)
         for transaction in self.current_transaction:
             predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource, str(transaction.amount)]))
-        for elector in self.polls[-1].keys():
-            chosen = self.polls[-1][elector]
+        for elector in self.last_poll.keys():
+            chosen = self.last_poll[elector]
             predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
-        predicates.append(Predicate.Predicate('killed', [self.deadmen[-1].name]))
+        if not self.hanged is None:
+            predicates.append(Predicate.Predicate('killed', [self.hanged.name]))
         for civilian in self.agents:
             civilian.acknowledge(predicates)
 
