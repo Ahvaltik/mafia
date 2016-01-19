@@ -16,7 +16,7 @@ class Transaction:
 
 
 class System:
-    def __init__(self, n_civilians=100, n_gangsters=10):
+    def __init__(self, n_civilians=50, n_gangsters=5):
         self.agents = []
         self.gangsters = []
         self.resources = {}
@@ -33,7 +33,7 @@ class System:
 
         elements = {
             "possible_predicate_names":
-                ["is", "killed", "nightKilled", "voted"],
+                ["is", "killed", "nightKilled", "voted", "day", "resource"],
             "possible_predicates_args":
                 self.list_of_names,
             "predicates_data": {
@@ -41,6 +41,9 @@ class System:
                     "amount_of_args": 1
                 },
                 "is": {
+                    "amount_of_args": 1
+                },
+				"day": {
                     "amount_of_args": 1
                 }
             },

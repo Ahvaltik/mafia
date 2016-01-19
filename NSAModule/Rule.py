@@ -57,11 +57,11 @@ class Rule:
 				for variableSet in variables:
 					res = element.proceed(variableSet, facts)
 					
-					if res == False:
+					if isinstance(res, bool) and res == False:
 						variables = False
 						break
 					
-					if res == True:
+					if isinstance(res, bool) and res == True:
 						tmp.append(variableSet)
 					
 					if isinstance(res, list):
