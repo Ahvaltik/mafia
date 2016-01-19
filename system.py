@@ -127,7 +127,10 @@ class System:
         self.__create_poll()
         self.transactions.append(self.current_transaction)
         predicates = []
+        predicates.append(Predicate.Predicate('day', [len(self.polls)]))
         predicates.append(Predicate.Predicate('nightKilled', [self.deadmen[-2].name]))
+        for transaction in self.current_transaction:
+            predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource, str(transaction.amount)]))
         for elector in self.polls[-1].keys():
             chosen = self.polls[-1][elector]
             predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
