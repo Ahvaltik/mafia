@@ -10,7 +10,7 @@ class NSACivilian(agent.Civilian):
 		self.facts = [Predicate.Predicate("is", [name])]
 		
 	def step(self):
-		self.nsa.generateRandomRules(100)
+		self.nsa.generateRandomRules(10)
 		self.nsa.removeInconsistentRules(self.name, self.system.list_of_names, self.facts)
 		if self.name.startswith('vito'):
 			rules = self.nsa.getRules()

@@ -11,22 +11,25 @@ class Before(RuleElement.RuleElement):
 		for i in range(len(facts)-1):
 			res0 = PredicateMatcher.PredicateMatcher.match(facts[i], self.predicates[0], variablesBase)
 			
-			if res0 == True:
+			if isinstance(res0, bool) and res0 == True:
 				for j in range(i+1, len(facts)):
 					res1 = PredicateMatcher.PredicateMatcher.match(facts[j], self.predicates[1], variablesBase)
-					if res1 == True:
+					if isinstance(res1, bool) and res1 == True:
 						return True
 					elif isinstance(res1, dict):
-						result.append(res1)
+						results.append(res1)
 				
-			if isinstance(res0, dict):
+			elif isinstance(res0, dict):
+				tmpVariablesBase = variablesBase.copy()
+				tmpVariablesBase.update(res0)
+			
 				for j in range(i+1, len(facts)):
-					res1 = PredicateMatcher.PredicateMatcher.match(facts[j], self.predicates[1], variablesBase)
-					if res1 == True:
-						result.append(res0)
+					res1 = PredicateMatcher.PredicateMatcher.match(facts[j], self.predicates[1], tmpVariablesBase)
+					if isinstance(res1, bool) and res1 == True:
+						results.append(res0)
 					elif isinstance(res1, dict):
-						res0.extend(res1)
-						result.append(res0)
+						res0.update(res1)
+						results.append(res0)
 				
 		if len(results) > 0:
 			return results
