@@ -4,4 +4,4 @@ import multiprocessing
 
 systemEngine = engine.Engine()
 systemEngine.start()
-systemEngine.result()
+systemEngine.result('results.txt')

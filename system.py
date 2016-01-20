@@ -18,7 +18,7 @@ class Transaction:
 
 
 class System:
-    def __init__(self, n_civilians=20, n_gangsters=2):
+    def __init__(self, dificulty='easy', agents_number=20, gangsters_percentage=0.1):
         self.day = 0
         self.agents = []
         self.gangsters = []
@@ -31,7 +31,7 @@ class System:
 
         self.list_of_names = []
         list_of_basic_names = ['marco', 'vito', 'ezio', 'flavio', 'vincento']
-        for i in range(n_civilians + n_gangsters):
+        for i in range(agents_number):
             self.list_of_names.append(random.choice(list_of_basic_names) + '_' + str(i))
 
         elements = {
@@ -61,9 +61,9 @@ class System:
                 [Exists.Exists(), Before.Before(), Less.Less()]
         }
 
-        for i in range(n_civilians):
+        for i in range(agents_number - int(agents_number * gangsters_percentage)):
             self.agents.append(NSAagent.NSACivilian(self, self.list_of_names[i], elements))
-        for i in range(n_gangsters):
+        for i in range(int(agents_number * gangsters_percentage)):
             self.gangsters.append(agent.Gangster(self, self.list_of_names[n_civilians + i]))
         self.agents.extend(self.gangsters)
         self.agents = random.sample(self.agents, len(self.agents))
