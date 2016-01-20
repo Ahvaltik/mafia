@@ -10,7 +10,6 @@ class NSAModule:
 			self.rules.append(Rule.Rule(self.elements))
 		
 	def removeInconsistentRules(self, candidateName, candidatesNames, facts):
-		res = {}
 		newRules = []
 		for rule in self.rules:
 			notTrueForAll = False
@@ -20,7 +19,7 @@ class NSAModule:
 				for key in res.keys():
 					if res[key] == False:
 						notTrueForAll = True
-					if res[key] == True and key != candidateName:
+					if res[key] != False and key != candidateName:
 						trueForSome = True
 					if notTrueForAll and trueForSome:
 						newRules.append(rule)

@@ -29,6 +29,8 @@ class Rule:
 		self.ruleElements = []
 		
 		variablesBase = ["CandidateName"]
+		for i in range(numberOfElements*10):
+			variablesBase.append("V"+str(i))
 		
 		for i in range(numberOfElements):
 			self.ruleElements.append(random.choice(listOfRuleElementsFactories).__class__(elements, True, variablesBase))

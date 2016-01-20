@@ -65,3 +65,11 @@ rule.ruleElements = [exists, exists2, less]
 nsa.rules = [rule]
 res = nsa.proceed(["john", "finn"], [Predicate.Predicate("day", ["1"]), Predicate.Predicate("resource", ["finn", "5"]), Predicate.Predicate("killed", ["finn"])])
 print res
+
+rule = Rule.Rule({})
+exists = Exists.Exists()
+exists.predicates = [Predicate.Predicate("killed", ["X"])]
+rule.ruleElements = [exists]
+nsa.rules = [rule]
+res = nsa.proceed(["john", "finn"], [Predicate.Predicate("day", ["1"]), Predicate.Predicate("resource", ["finn", "5"]), Predicate.Predicate("killed", ["finn"])])
+print res

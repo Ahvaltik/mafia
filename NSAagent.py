@@ -11,14 +11,17 @@ class NSACivilian(agent.Civilian):
 		self.capacityOfMemory = capacityOfMemory
 		
 	def step(self):
-		self.nsa.generateRandomRules(1000)
+		self.nsa.generateRandomRules(100)
 
-		self.system.add_resource(self, 'A', 6)
+		self.system.add_resource(self, 'A', "6")
 		#for rule in self.nsa.getRules():
 		#	print str(rule)
 		#print "\n\n"
 		
-		self.nsa.removeInconsistentRules(self.name, self.system.list_of_names, self.facts)
+		list_of_names = []
+		for agent in self.system.agents:
+			list_of_names.append(agent.name)
+		self.nsa.removeInconsistentRules(self.name, list_of_names, self.facts)
 		if len(self.nsa.getRules()) > 0:
 			print self.name, len(self.nsa.getRules())
 		
