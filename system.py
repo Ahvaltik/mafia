@@ -18,15 +18,15 @@ class Transaction:
 
 
 class System:
-	def __init__(self, n_civilians=10, n_gangsters=2):
-		self.agents = []
-		self.gangsters = []
-		self.resources = {}
-		self.polls = []
-		self.night_polls = []
-		self.deadmen = []
-		self.transactions = []
-		self.current_transaction = []
+    def __init__(self, n_civilians=10, n_gangsters=2):
+        self.agents = []
+        self.gangsters = []
+        self.resources = {}
+        self.polls = []
+        self.night_polls = []
+        self.deadmen = []
+        self.transactions = []
+        self.current_transaction = []
 
         self.list_of_names = []
         list_of_basic_names = ['marco', 'vito', 'ezio', 'flavio', 'vincento']
@@ -45,7 +45,7 @@ class System:
                 "is": {
                     "amount_of_args": 1
                 },
-				"day": {
+                "day": {
                     "amount_of_args": 1
                 }
             },
@@ -128,7 +128,7 @@ class System:
         self.current_transaction = []
         predicates = []
         predicates.append(Predicate.Predicate('day', [len(self.polls)]))
-        self.__night_step()
+        self.__night_step
         self.__create_night_poll()
         if not self.murdered is None:
             predicates.append(Predicate.Predicate('nightKilled', [self.murdered.name]))
@@ -136,7 +136,8 @@ class System:
         self.__create_poll()
         self.transactions.append(self.current_transaction)
         for transaction in self.current_transaction:
-            predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource, str(transaction.amount)]))
+            predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource,
+                                                               str(transaction.amount)]))
         for elector in self.last_poll.keys():
             chosen = self.last_poll[elector]
             if chosen is None:
@@ -149,31 +150,13 @@ class System:
         for civilian in self.agents:
             civilian.acknowledge(predicates)
 
-	def __day_step(self):
-		for civilian in self.agents:
-			civilian.step()
-		#if __name__ == "__main__":
-		#	proc = []
-		#	for civilian in self.agents:
-		#		p = Process(target=civilian.step())
-		#		p.start()
-		#		proc.append(p)
-			
-		#	for p in proc:
-		#		p.join()
+    def __day_step(self):
+        for civilian in self.agents:
+            civilian.step()
 
-	def __night_step(self):
-		for gangster in self.gangsters:
-			gangster.night_step()
-		#if __name__ == "__main__":
-		#	proc = []
-		#	for gangster in self.gangsters:
-		#		p = Process(target=gangster.night_step())
-		#		p.start()
-		#		proc.append(p)
-			
-		#	for p in proc:
-		#		p.join()
+    def __night_step(self):
+        for gangster in self.gangsters:
+            gangster.night_step()
 
-	def finished(self):
-		return 2 * len(self.gangsters) > len(self.agents) or len(self.gangsters) == 0
+    def finished(self):
+        return 2 * len(self.gangsters) > len(self.agents) or len(self.gangsters) == 0
