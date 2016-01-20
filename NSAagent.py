@@ -33,10 +33,7 @@ class NSACivilian(agent.Civilian):
 			self.facts = tmp
 		
 	def vote(self):
-		list_of_names = []
-		for agentName in self.system.agents:
-			list_of_names.append(agentName)
-		res = self.nsa.proceed(list_of_names, self.facts)
+		res = self.nsa.proceed(self.system.list_of_names, self.facts)
 		minVal = -1
 		minName = []
 		for key in res.keys():
@@ -51,9 +48,9 @@ class NSACivilian(agent.Civilian):
 				minName.append(key)
 
 		minName = random.choice(minName)
-		#print self.system.agents
-		#print "vote", minName
+		print self.system.agents
+		print "vote", minName
 		for agent in self.system.agents:
 			if agent.name == minName:
-				#print agent
+				print agent
 				return agent
