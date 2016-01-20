@@ -37,7 +37,8 @@ class Civilian:
 
 class Gangster(Civilian):
 	def step(self):
-		#self.system.add_resource(self, 'A', 5)
+		if random.random() < 0.3:
+			self.system.add_resource(self, 'A', str(3 + random.random()*1))
 		pass
 
 	def night_step(self):
