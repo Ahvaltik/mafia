@@ -8,7 +8,7 @@ class Engine:
 
     def result(self):
         print str(len(self.system.gangsters)) + "/" + str(len(self.system.agents))
-        if str(len(self.system.gangsters)) > 0:
+        if len(self.system.gangsters) > 0:
             print "Gang wins"
         else:
             print "Town wins"

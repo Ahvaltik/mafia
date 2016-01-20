@@ -11,7 +11,6 @@ class Civilian:
 		# TODO declaration of necessary agent resources and knowledge
 
 	def step(self):
-		# TODO producing and consuming resources
 		pass
 
 	def execute(self):
@@ -37,6 +36,10 @@ class Civilian:
 
 
 class Gangster(Civilian):
+	def step(self):
+		#self.system.add_resource(self, 'A', 5)
+		pass
+
 	def night_step(self):
 		pass
 

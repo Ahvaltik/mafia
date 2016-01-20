@@ -12,7 +12,8 @@ class NSACivilian(agent.Civilian):
 		
 	def step(self):
 		self.nsa.generateRandomRules(1000)
-		
+
+		self.system.add_resource(self, 'A', 6)
 		#for rule in self.nsa.getRules():
 		#	print str(rule)
 		#print "\n\n"
