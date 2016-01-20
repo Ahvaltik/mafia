@@ -2,6 +2,6 @@ import engine
 import system
 import multiprocessing
 
-systemEngine = engine.Engine(system.System())
+systemEngine = engine.Engine()
 systemEngine.start()
-systemEngine.result()
+systemEngine.result('results.txt')
