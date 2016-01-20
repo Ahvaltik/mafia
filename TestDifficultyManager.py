@@ -6,9 +6,11 @@ class TestDifficultyManager:
 		self.system = system
 		self.nsa_elements = nsa_elements
 		self.separability = separability
+		self.alreadyUsedNames = -1
 		
 	def generateName(self):
-		pass
+		self.alreadyUsedNames += 1
+		return "a" + str(self.alreadyUsedNames)
 		
 	def createCivilian(self):
 		if self.separability == "hard":
