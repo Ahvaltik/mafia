@@ -4,8 +4,8 @@ from NSAModule import NSAModule
 from NSAModule import Predicate
 
 class NSACivilian(agent.Civilian):
-	def __init__(self, system, name, nsa_elements = {}, capacityOfMemory = 30):
-		agent.Civilian.__init__(self, system, name)
+	def __init__(self, system, name, nsa_elements = {}, capacityOfMemory = 30, probabilityOfGeneratingResource = 0.5, typeOfResource = "resource", meanAmountOfResource = 3, varianceOfResource = 1):
+		agent.Civilian.__init__(self, system, name, probabilityOfGeneratingResource, typeOfResource, meanAmountOfResource, varianceOfResource)
 		self.nsa = NSAModule.NSAModule(nsa_elements)
 		self.facts = [Predicate.Predicate("is", [name])]
 		self.capacityOfMemory = capacityOfMemory
@@ -13,8 +13,7 @@ class NSACivilian(agent.Civilian):
 	def step(self):
 		self.nsa.generateRandomRules(1000)
 
-		if random.random() < 0.6:
-			self.system.add_resource(self, 'A', str(6 + random.random()*1))
+		self.generateResource()
 		
 		list_of_names = []
 		for agent in self.system.agents:

@@ -4,14 +4,23 @@ import random
 
 class Civilian:
 
-	def __init__(self, system, name):
+	def __init__(self, system, name, probabilityOfGeneratingResource = 0.5, typeOfResource = "resource", meanAmountOfResource = 3, varianceOfResource = 1):
 		self.name = name
 		self.__active = True
 		self.system = system
+		self.probabilityOfGeneratingResource = probabilityOfGeneratingResource
+		self.typeOfResource = typeOfResource
+		self.meanAmountOfResource = meanAmountOfResource
+		self.varianceOfResource = varianceOfResource
 		# TODO declaration of necessary agent resources and knowledge
 
 	def step(self):
-		pass
+		self.generateResource()
+		
+	def generateResource(self):
+		if random.random() < self.probabilityOfGeneratingResource:
+			self.system.add_resource(self, self.typeOfResource, str(self.meanAmountOfResource + random.random()*self.varianceOfResource))
+		
 
 	def execute(self):
 		self.__active = False
@@ -37,9 +46,7 @@ class Civilian:
 
 class Gangster(Civilian):
 	def step(self):
-		if random.random() < 0.3:
-			self.system.add_resource(self, 'A', str(3 + random.random()*1))
-		pass
+		self.generateResource()
 
 	def night_step(self):
 		pass
