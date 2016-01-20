@@ -13,7 +13,7 @@ class Rule:
 	def __init__(self, elements):
 		self.positive = None
 		
-		averageNumberOfRuleElements = 3
+		averageNumberOfRuleElements = 2
 		if elements.has_key("average_number_of_rule_elements"):
 			averageNumberOfRuleElements = elements["average_number_of_rule_elements"]
 			
