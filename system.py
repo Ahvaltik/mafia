@@ -19,27 +19,22 @@ class Transaction:
 
 
 class System:
-    def __init__(self, dificulty='easy', agents_number=20, gangsters_percentage=0.1):
+    def __init__(self, difficulty='easy', agents_number=20, gangsters_percentage=0.1):
         self.day = 0
         self.agents = []
         self.gangsters = []
         self.resources = {}
-        self.polls = []
-        self.night_polls = []
-        self.deadmen = []
-        self.transactions = []
+        # self.polls = []
+        # self.night_polls = []
+        # self.deadmen = []
+        # self.transactions = []
         self.current_transaction = []
-
-
-        self.list_of_names = []
-        list_of_basic_names = ['marco', 'vito', 'ezio', 'flavio', 'vincento']
-        for i in range(agents_number):
-            self.list_of_names.append(random.choice(list_of_basic_names) + '_' + str(i))
+        self.list_of_names = map(lambda x: 'a' + str(x), range(agents_number))
 
         elements = {
             "possible_predicate_names":
                 ["is", "killed", "nightKilled", "voted", "day", "resource"],
-                #["resource"],
+            # ["resource"],
             "possible_predicates_args":
                 self.list_of_names,
             "predicates_data": {
@@ -62,7 +57,7 @@ class System:
             "rule_elements_factories":
                 [Exists.Exists(), Before.Before(), Less.Less()]
         }
-        test_difficulty_manager = TestDifficultyManager.TestDifficultyManager(self, elements, dificulty)
+        test_difficulty_manager = TestDifficultyManager.TestDifficultyManager(self, elements, difficulty)
         for i in range(agents_number - int(agents_number * gangsters_percentage)):
             self.agents.append(test_difficulty_manager.createNSACivilian())
         for i in range(int(agents_number * gangsters_percentage)):
@@ -108,8 +103,8 @@ class System:
             if not best_candidate.civilian:
                 self.gangsters.remove(best_candidate)
             best_candidate.execute()
-            self.deadmen.append(best_candidate)
-            self.polls.append(vote)
+            # self.deadmen.append(best_candidate)
+            # self.polls.append(vote)
         self.hanged = best_candidate
         self.last_poll = vote
 
@@ -129,35 +124,34 @@ class System:
         if best_candidate:
             self.agents.remove(best_candidate)
             best_candidate.execute()
-            self.deadmen.append(best_candidate)
-            self.night_polls.append(vote)
+            # self.deadmen.append(best_candidate)
+            # self.night_polls.append(vote)
         self.murdered = best_candidate
 
     def step(self):
         print str(len(self.gangsters)) + "/" + str(len(self.agents))
         self.current_transaction = []
-        predicates = []
-        predicates.append(Predicate.Predicate('day', [str(self.day)]))
+        predicates = [Predicate.Predicate('day', [str(self.day)])]
         self.__night_step()
         self.__create_night_poll()
         if not self.murdered is None:
             predicates.append(Predicate.Predicate('nightKilled', [self.murdered.name]))
         self.__day_step()
         self.__create_poll()
-        self.transactions.append(self.current_transaction)
+        # self.transactions.append(self.current_transaction)
         for transaction in self.current_transaction:
             predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource,
                                                                str(transaction.amount)]))
         for elector in self.last_poll.keys():
             chosen = self.last_poll[elector]
-            if not chosen is None:
+            if chosen is not None:
                 predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
-        if not self.hanged is None:
+        if self.hanged is not None:
             predicates.append(Predicate.Predicate('killed', [self.hanged.name]))
-        #print map(lambda x: str(x), predicates)
+        # print map(lambda x: str(x), predicates)
         for civilian in self.agents:
             civilian.acknowledge(predicates)
-        self.day = self.day+1
+        self.day += 1
 
     def __day_step(self):
         for civilian in self.agents:
