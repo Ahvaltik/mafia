@@ -31,7 +31,7 @@ class Rule:
 		variablesBase = ["CandidateName"]
 		
 		for i in range(numberOfElements):
-			self.ruleElements.append(random.choice(listOfRuleElementsFactories).__class__(elements, True, variablesBase))
+			self.ruleElements.append(random.sample(listOfRuleElementsFactories, 1)[0].__class__(elements, True, variablesBase))
 		
 	def setPositive(positive):
 		self.positive = positive
@@ -49,8 +49,6 @@ class Rule:
 		- dict of variables set for which this rule is true for this facts (it means that it is true)
 		'''
 		candidateRes = {}
-		
-		#print "facts", facts
 	
 		for candidateName in candidatesNames:
 			variables = [{"CandidateName": candidateName}]
