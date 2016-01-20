@@ -19,6 +19,7 @@ class Transaction:
 
 class System:
     def __init__(self, n_civilians=10, n_gangsters=2):
+        self.day = 0
         self.agents = []
         self.gangsters = []
         self.resources = {}
@@ -127,8 +128,8 @@ class System:
         print str(len(self.gangsters)) + "/" + str(len(self.agents))
         self.current_transaction = []
         predicates = []
-        predicates.append(Predicate.Predicate('day', [len(self.polls)]))
-        self.__night_step
+        predicates.append(Predicate.Predicate('day', [str(self.day)]))
+        self.__night_step()
         self.__create_night_poll()
         if not self.murdered is None:
             predicates.append(Predicate.Predicate('nightKilled', [self.murdered.name]))
@@ -140,15 +141,13 @@ class System:
                                                                str(transaction.amount)]))
         for elector in self.last_poll.keys():
             chosen = self.last_poll[elector]
-            if chosen is None:
-                vote = 'None'
-            else:
-                vote = chosen.name
-            predicates.append(Predicate.Predicate('voted', [elector.name, vote]))
+            if not chosen is None:
+                predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
         if not self.hanged is None:
             predicates.append(Predicate.Predicate('killed', [self.hanged.name]))
         for civilian in self.agents:
             civilian.acknowledge(predicates)
+        self.day = 1 + self.day
 
     def __day_step(self):
         for civilian in self.agents:
