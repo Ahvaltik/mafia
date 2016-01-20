@@ -1,13 +1,11 @@
 import agent
-from NSAModule import NSAagent
+import NSAagent
 
 class TestDifficultyManager:
-	def __init__(self, system, nsa_elements, separability = "medium", gangToCivilRatio = "medium", numberOfCivilians = "medium"):
+	def __init__(self, system, nsa_elements, separability = "medium"):
 		self.system = system
 		self.nsa_elements = nsa_elements
 		self.separability = separability
-		self.gangToCivilRatio = gangToCivilRatio
-		self.numberOfCivilians = numberOfCivilians
 		
 	def generateName(self):
 		pass

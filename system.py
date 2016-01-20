@@ -5,6 +5,7 @@ from NSAModule import Exists
 from NSAModule import Before
 from NSAModule import Less
 from NSAModule import Predicate
+import TestDifficultyManager
 from multiprocessing import Process
 
 __author__ = 'Pawel'
@@ -28,6 +29,7 @@ class System:
         self.deadmen = []
         self.transactions = []
         self.current_transaction = []
+
 
         self.list_of_names = []
         list_of_basic_names = ['marco', 'vito', 'ezio', 'flavio', 'vincento']
@@ -60,11 +62,11 @@ class System:
             "rule_elements_factories":
                 [Exists.Exists(), Before.Before(), Less.Less()]
         }
-
+        test_difficulty_manager = TestDifficultyManager.TestDifficultyManager(self, elements, dificulty)
         for i in range(agents_number - int(agents_number * gangsters_percentage)):
-            self.agents.append(NSAagent.NSACivilian(self, self.list_of_names[i], elements))
+            self.agents.append(test_difficulty_manager.createNSACivilian())
         for i in range(int(agents_number * gangsters_percentage)):
-            self.gangsters.append(agent.Gangster(self, self.list_of_names[n_civilians + i]))
+            self.gangsters.append(test_difficulty_manager.createGangster())
         self.agents.extend(self.gangsters)
         self.agents = random.sample(self.agents, len(self.agents))
 
