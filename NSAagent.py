@@ -33,7 +33,10 @@ class NSACivilian(agent.Civilian):
 			self.facts = tmp
 		
 	def vote(self):
-		res = self.nsa.proceed(self.system.list_of_names, self.facts)
+		list_of_names = []
+		for agent in self.system.agents:
+			list_of_names.append(agent.name)
+		res = self.nsa.proceed(list_of_names, self.facts)
 		minVal = -1
 		minName = []
 		for key in res.keys():
