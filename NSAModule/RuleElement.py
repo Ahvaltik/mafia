@@ -35,7 +35,7 @@ class RuleElement:
 			for i in range(amountOfPredicates):
 				predicatesArgs = []
 			
-				if createPattern and random.random() < 0.1:
+				if createPattern and random.random() < 0.0:
 					if predicateNameVariablesBase and random.random() < 0.6:
 						predicateName = "P" + str(random.randrange(0, len(predicateNameVariablesBase) + 1))
 					else:
@@ -54,10 +54,10 @@ class RuleElement:
 				
 				if createPattern:
 					if amountOfArgs < 3:
-						amountOfVariableArgs = random.randint(math.ceil(amountOfArgs/2), amountOfArgs)
+						amountOfVariableArgs = amountOfArgs #= random.randint(math.ceil(amountOfArgs/2), amountOfArgs)
 						amountOfNewlyCreatedVariables = random.randint(math.ceil(amountOfVariableArgs/2), amountOfVariableArgs)
 					else:
-						amountOfVariableArgs = int(amountOfArgs * random.gauss(0.7, 0.2))
+						amountOfVariableArgs = int(amountOfArgs * random.gauss(1, 0))
 						amountOfNewlyCreatedVariables = int(amountOfVariableArgs * random.gauss(0.3, 0.2))
 					
 					for i in range(len(variablesBase), len(variablesBase) + amountOfNewlyCreatedVariables):

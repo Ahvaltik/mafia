@@ -51,9 +51,6 @@ class NSACivilian(agent.Civilian):
 				minName.append(key)
 
 		minName = random.choice(minName)
-		#print self.system.agents
-		#print "vote", minName
 		for agent in self.system.agents:
 			if agent.name == minName:
-				#print agent
 				return agent
