@@ -10,13 +10,16 @@ class NSACivilian(agent.Civilian):
 		self.facts = [Predicate.Predicate("is", [name])]
 		
 	def step(self):
-		self.nsa.generateRandomRules(200)
+		self.nsa.generateRandomRules(20)
+		
+		#for rule in self.nsa.getRules():
+		#	print str(rule)
+		#print "\n\n"
+		
 		self.nsa.removeInconsistentRules(self.name, self.system.list_of_names, self.facts)
 		if len(self.nsa.getRules()) > 0:
 			print self.name, len(self.nsa.getRules())
-		#for fact in self.facts:
-		#	print fact,
-		#print
+		
 		
 	def acknowledge(self, effects):
 		self.facts.extend(effects)
