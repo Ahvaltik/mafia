@@ -139,7 +139,11 @@ class System:
             predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource, str(transaction.amount)]))
         for elector in self.last_poll.keys():
             chosen = self.last_poll[elector]
-            predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
+            if chosen is None:
+                vote = 'None'
+            else:
+                vote = chosen.name
+            predicates.append(Predicate.Predicate('voted', [elector.name, vote]))
         if not self.hanged is None:
             predicates.append(Predicate.Predicate('killed', [self.hanged.name]))
         for civilian in self.agents:
