@@ -135,6 +135,7 @@ class System:
 			predicates.append(Predicate.Predicate('resource', [transaction.civilian.name, transaction.resource, str(transaction.amount)]))
 		for elector in self.polls[-1].keys():
 			chosen = self.polls[-1][elector]
+			print elector.name
 			predicates.append(Predicate.Predicate('voted', [elector.name, chosen.name]))
 		predicates.append(Predicate.Predicate('killed', [self.deadmen[-1].name]))
 		for civilian in self.agents:
