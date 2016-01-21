@@ -124,7 +124,7 @@ class System:
         self.murdered = best_candidate
 
     def step(self):
-        print str(len(self.gangsters)) + "/" + str(len(self.agents))
+        # print str(len(self.gangsters)) + "/" + str(len(self.agents))
         self.current_transaction = []
         predicates = [Predicate.Predicate('day', [str(self.day)])]
         self.__night_step()
