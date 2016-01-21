@@ -11,7 +11,7 @@ class NSACivilian(agent.Civilian):
 		self.capacityOfMemory = capacityOfMemory
 		
 	def step(self):
-		self.nsa.generateRandomRules(1000)
+		self.nsa.generateRandomRules(100)
 
 		self.generateResource()
 		

@@ -20,13 +20,13 @@ class TestDifficultyManager:
 		else:
 			return agent.Civilia(self.system, self.generateName(), 0.6, "resource", 6, 1)
 		
-	def createNSACivilian(self):
+	def createNSACivilian(self, memorySize):
 		if self.separability == "hard":
-			return NSAagent.NSACivilian(self.system, self.generateName(), self.nsa_elements, 30, 0.6, "resource", 6, 2)
+			return NSAagent.NSACivilian(self.system, self.generateName(), self.nsa_elements, memorySize, 0.6, "resource", 6, 2)
 		elif self.separability == "medium":
-			return NSAagent.NSACivilian(self.system, self.generateName(), self.nsa_elements, 30, 0.6, "resource", 6, 1)
+			return NSAagent.NSACivilian(self.system, self.generateName(), self.nsa_elements, memorySize, 0.6, "resource", 6, 1)
 		else:
-			return NSAagent.NSACivilian(self.system, self.generateName(), self.nsa_elements, 30, 0.6, "resource", 6, 1)
+			return NSAagent.NSACivilian(self.system, self.generateName(), self.nsa_elements, memorySize, 0.6, "resource", 6, 1)
 		
 	def createGangster(self):
 		if self.separability == "hard":

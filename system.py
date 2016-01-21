@@ -19,22 +19,17 @@ class Transaction:
 
 
 class System:
-    def __init__(self, difficulty='easy', agents_number=20, gangsters_percentage=0.1):
+    def __init__(self, difficulty='easy', civilians_number=20, gangsters_number=2):
         self.day = 0
         self.agents = []
         self.gangsters = []
         self.resources = {}
-        # self.polls = []
-        # self.night_polls = []
-        # self.deadmen = []
-        # self.transactions = []
         self.current_transaction = []
-        self.list_of_names = map(lambda x: 'a' + str(x), range(agents_number))
+        self.list_of_names = map(lambda x: 'a' + str(x), range(civilians_number + gangsters_number))
 
         elements = {
             "possible_predicate_names":
                 ["is", "killed", "nightKilled", "voted", "day", "resource"],
-            # ["resource"],
             "possible_predicates_args":
                 self.list_of_names,
             "predicates_data": {
@@ -58,9 +53,9 @@ class System:
                 [Exists.Exists(), Before.Before(), Less.Less()]
         }
         test_difficulty_manager = TestDifficultyManager.TestDifficultyManager(self, elements, difficulty)
-        for i in range(agents_number - int(agents_number * gangsters_percentage)):
-            self.agents.append(test_difficulty_manager.createNSACivilian())
-        for i in range(int(agents_number * gangsters_percentage)):
+        for i in range(civilians_number):
+            self.agents.append(test_difficulty_manager.createNSACivilian(int(2.5*(civilians_number+gangsters_number))))
+        for i in range(gangsters_number):
             self.gangsters.append(test_difficulty_manager.createGangster())
         self.agents.extend(self.gangsters)
         self.agents = random.sample(self.agents, len(self.agents))
